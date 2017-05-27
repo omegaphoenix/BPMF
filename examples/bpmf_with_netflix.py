@@ -57,5 +57,3 @@ bpmf = BPMF(n_user=n_user, n_item=n_item, n_feature=n_feature,
             max_rating=5., min_rating=1., seed=0)
 
 bpmf.fit(train, n_iters=eval_iters)
-train_preds = bpmf.predict(train[:, :2])
-train_rmse = RMSE(train_preds, train[:, 2])
