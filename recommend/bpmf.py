@@ -104,15 +104,14 @@ class BPMF(ModelBase):
             logger.info("iter: %d, train RMSE: %.6f", iteration, train_rmse)
 
             # stop when converge
+            output_filename = "/Users/justinleong/redeem-team/out/bpmf/v1_1236_fac_" + str(n_feature) + "_iter_" + str(iteration) + "_"
             if last_rmse and abs(train_rmse - last_rmse) < self.converge:
                 logger.info('converges at iteration %d. stop.', iteration)
-                output_filename = "/Users/justinleong/redeem-team/out/bpmf/v0_1236_fac_" + str(n_feature) + "_iter_" + str(iteration) + "_"
                 test_rmse = self.output_all(output_filename)
                 break
             else:
                 last_rmse = train_rmse
                 if iteration % 5 == 0:
-                    output_filename = "/Users/justinleong/redeem-team/out/bpmf/v0_1236_fac_" + str(n_feature) + "_iter_" + str(iteration) + "_"
                     test_rmse = self.output_all(output_filename)
 
             # stop when converge
