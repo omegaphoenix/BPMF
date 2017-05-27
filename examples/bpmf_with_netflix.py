@@ -44,6 +44,7 @@ n_user = max(ratings[:, 0]) + 1
 n_item = max(ratings[:, 1]) + 1
 
 rand_state.shuffle(ratings)
+print("Done shuffling\n")
 train_size = ratings.shape[0]
 train = ratings
 
@@ -55,7 +56,7 @@ test_size = ratings.shape[0]
 validation = ratings
 
 # models settings
-n_feature = 20
+n_feature = 10
 eval_iters = 100
 print("n_user: %d, n_item: %d, n_feature: %d, training size: %d, validation size: %d" % (
     n_user, n_item, n_feature, train.shape[0], validation.shape[0]))

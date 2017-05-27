@@ -40,6 +40,6 @@ class ModelBase(object):
                 # compute RMSE
                 test_rmse = RMSE(preds, pred_ratings[:, 2])
                 logger.info("test RMSE: %.6f", test_rmse)
-            out_filename = in_filename + "data_" + j + ".txt"
+            out_filename = filename + "data_" + j + ".txt"
             output_predictions(preds, out_filename)
         return test_rmse
