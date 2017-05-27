@@ -44,4 +44,4 @@ def output_predictions(preds, filename):
     """
     with open(filename, 'w') as f:
         for rating in preds:
-            f.write('%f\n' % rating)
+            f.write('%.3f\n' % rating)
