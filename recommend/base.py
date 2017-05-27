@@ -29,6 +29,7 @@ class ModelBase(object):
     def output_all(self, filename):
         """output all predictions"""
         in_filename = "/Users/justinleong/redeem-team/data/um/"
+        print "Outputting predictions..."
         for i in xrange(5):
             j = str(i + 1)
             cur_filename = in_filename + j

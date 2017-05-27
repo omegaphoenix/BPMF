@@ -43,30 +43,19 @@ ratings = load_netflix(train_filename)
 n_user = max(ratings[:, 0]) + 1
 n_item = max(ratings[:, 1]) + 1
 
-rand_state.shuffle(ratings)
-print("Done shuffling\n")
+#rand_state.shuffle(ratings)
+#print("Done shuffling\n")
 train_size = ratings.shape[0]
 train = ratings
 
-test_filename = "/Users/justinleong/redeem-team/data/um/4"
-ratings = load_netflix(test_filename)
-
-# rand_state.shuffle(ratings)
-test_size = ratings.shape[0]
-validation = ratings
-
 # models settings
-n_feature = 10
+n_feature = 15
 eval_iters = 100
-print("n_user: %d, n_item: %d, n_feature: %d, training size: %d, validation size: %d" % (
-    n_user, n_item, n_feature, train.shape[0], validation.shape[0]))
+print("n_user: %d, n_item: %d, n_feature: %d, training size: %d" % (
+    n_user, n_item, n_feature, train.shape[0]))
 bpmf = BPMF(n_user=n_user, n_item=n_item, n_feature=n_feature,
             max_rating=5., min_rating=1., seed=0)
 
 bpmf.fit(train, n_iters=eval_iters)
 train_preds = bpmf.predict(train[:, :2])
 train_rmse = RMSE(train_preds, train[:, 2])
-val_preds = bpmf.predict(validation[:, :2])
-val_rmse = RMSE(val_preds, validation[:, 2])
-print("after %d iteration, train RMSE: %.6f, validation RMSE: %.6f" %
-      (eval_iters, train_rmse, val_rmse))
