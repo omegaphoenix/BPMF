@@ -86,6 +86,7 @@ class BPMF(ModelBase):
         self.ratings_csc_ = self.ratings_csr_.tocsc()
 
         last_rmse = None
+        last_test_rmse = None
         for iteration in xrange(n_iters):
             logger.debug("iteration %d...", iteration)
 
@@ -100,16 +101,27 @@ class BPMF(ModelBase):
             # compute RMSE
             train_preds = self.predict(ratings[:, :2])
             train_rmse = RMSE(train_preds, ratings[:, 2])
-            train_preds = self.predict(ratings[:, :2])
-            train_rmse = RMSE(train_preds, ratings[:, 2])
             logger.info("iter: %d, train RMSE: %.6f", iteration, train_rmse)
 
             # stop when converge
             if last_rmse and abs(train_rmse - last_rmse) < self.converge:
                 logger.info('converges at iteration %d. stop.', iteration)
+                output_filename = "/Users/justinleong/redeem-team/out/bpmf/v0_1236_fac_" + str(n_feature) + "_iter_" + str(iteration) + "_"
+                test_rmse = self.output_all(output_filename)
                 break
             else:
                 last_rmse = train_rmse
+                if iteration % 5 == 0:
+                    output_filename = "/Users/justinleong/redeem-team/out/bpmf/v0_1236_fac_" + str(n_feature) + "_iter_" + str(iteration) + "_"
+                    test_rmse = self.output_all(output_filename)
+
+            # stop when converge
+            if last_test_rmse and abs(test_rmse - last_test_rmse) < self.converge:
+                logger.info('converges at iteration %d. stop.', iteration)
+                break
+            else:
+                last_test_rmse = test_rmse
+
         return self
 
     def predict(self, data):

@@ -1,7 +1,6 @@
 import numpy as np
 from ..exceptions import DimensionError
 
-
 def check_ratings(ratings, n_user, n_item, max_rating=None, min_rating=None):
     """Check rating array
 
@@ -34,3 +33,15 @@ def check_ratings(ratings, n_user, n_item, max_rating=None, min_rating=None):
 
     if min_rating is not None and np.any(ratings[:, 2] < min_rating):
         raise ValueError("min rating >= %d", min_rating)
+
+def output_predictions(preds, filename):
+    """Print out predictions
+
+    Return
+    ------
+        None
+
+    """
+    with open(filename, 'w') as f:
+        for rating in preds:
+            f.write('%f\n' % rating)
