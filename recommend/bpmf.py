@@ -113,13 +113,13 @@ class BPMF(ModelBase):
                 last_rmse = train_rmse
                 if iteration % 5 == 0:
                     test_rmse = self.output_all(output_filename)
+                    # stop when converge
+                    if last_test_rmse and (last_test_rmse - test_rmse < 0.):
+                        logger.info('converges at iteration %d. stop.', iteration)
+                        break
+                    else:
+                        last_test_rmse = test_rmse
 
-            # stop when converge
-            if last_test_rmse and abs(test_rmse - last_test_rmse) < self.converge:
-                logger.info('converges at iteration %d. stop.', iteration)
-                break
-            else:
-                last_test_rmse = test_rmse
 
         return self
 
